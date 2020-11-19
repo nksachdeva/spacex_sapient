@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { filterSuccessLaunches } from '../../actions';
+import history from '../../history';
 
 class SuccessfulLaunch extends React.Component {
 
@@ -14,6 +15,20 @@ class SuccessfulLaunch extends React.Component {
 
         this.props.filterSuccessLaunches(value);
 
+    }
+
+    componentDidMount(){
+        const params = new URLSearchParams(history.location.search);
+        const launch_success = params.get('launch_success');
+
+        if(launch_success){
+            var boolValue = launch_success.toLowerCase() === 'true' ? true : false; 
+            this.props.filterSuccessLaunches(boolValue);
+            return;
+
+        }
+        
+        this.props.filterSuccessLaunches(launch_success);
     }
 
     render() {

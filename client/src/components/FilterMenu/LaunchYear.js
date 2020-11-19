@@ -18,9 +18,18 @@ class LaunchYear extends React.Component {
         this.props.filterByYear(value);
     }
 
-    componentDidUpdate(){
-        this.props.fetchLaunches();
+    componentDidMount(){
+        const params = new URLSearchParams(history.location.search);
+        const selected_year = params.get('launch_year');
+
+        if(selected_year){
+            this.props.filterByYear(+selected_year);
+            return;
+        }
+
+        this.props.filterByYear(selected_year);
     }
+
 
     renderYears(launches) {
 

@@ -2,7 +2,7 @@
 import history from '../history';
 import launches from '../apis/launches';
 
-export const filterSuccessLaunches = (successful) => {
+export const filterSuccessLaunches = (successful) => async dispatch => {
 
     const params = new URLSearchParams(history.location.search);
     const queryValue = params.get('launch_success');
@@ -32,13 +32,20 @@ export const filterSuccessLaunches = (successful) => {
 
     history.push(queryString);
 
-    return {
-        type: 'FILTER_LAUNCH',
-        payload: successful
-    }
+    launches.get(`/${queryString.replace('?', '&')}`)
+        .then(response => {
+            dispatch({
+                type: 'FILTER_LAUNCH',
+                payload: successful
+            })
+            dispatch({
+                type: 'FETCH_LAUNCHES',
+                payload: response.data
+            })
+        });
 }
 
-export const filterSuccessLandings = (successful) => {
+export const filterSuccessLandings = (successful) => async dispatch => {
 
     const params = new URLSearchParams(history.location.search);
     const queryValue = params.get('land_success');
@@ -68,13 +75,21 @@ export const filterSuccessLandings = (successful) => {
 
     history.push(queryString);
 
-    return {
-        type: 'FILTER_LAND',
-        payload: successful
-    }
+
+    launches.get(`/${queryString.replace('?', '&')}`)
+        .then(response => {
+            dispatch({
+                type: 'FILTER_LAND',
+                payload: successful
+            })
+            dispatch({
+                type: 'FETCH_LAUNCHES',
+                payload: response.data
+            })
+        });
 }
 
-export const filterByYear = (year) => {
+export const filterByYear = (year) => async dispatch => {
     let queryString = history.location.search;
     const paramIndex = queryString.indexOf('launch_year');
 
@@ -103,10 +118,17 @@ export const filterByYear = (year) => {
 
     history.push(queryString);
 
-    return {
-        type: 'FILTER_YEAR',
-        payload: year
-    }
+    launches.get(`/${queryString.replace('?', '&')}`)
+        .then(response => {
+            dispatch({
+                type: 'FILTER_YEAR',
+                payload: year
+            })
+            dispatch({
+                type: 'FETCH_LAUNCHES',
+                payload: response.data
+            })
+        });
 }
 
 
