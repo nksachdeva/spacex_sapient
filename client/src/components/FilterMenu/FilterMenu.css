@@ -1,0 +1,29 @@
+.btn-group button {
+    background-color: greenyellow;
+    padding: 10px 24px;
+    margin: 0px 10px;
+    cursor: pointer;
+    border-radius: 1rem;
+    outline: none;
+}
+
+.btn-group {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  row-gap: 1rem;
+  justify-items: center;
+}
+
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+.btn-group button:hover {
+    background-color: green;
+}
+
+.btn-group .selected {
+    background-color: green;
+}
